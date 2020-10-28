@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, ThemeProvider } from '@material-ui/core'
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
 
 
 //theme
@@ -21,15 +21,15 @@ const GeneralInformation = (user) => {
                 <TableBody>
                     <TableRow>
                         <TableCell>Name</TableCell>
-                        <TableCell>{user.user.name}</TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Email</TableCell>
-                        <TableCell>{user.user.email}</TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Languages</TableCell>
-                        <TableCell>{user.user.languages}</TableCell>
+                        <TableCell></TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

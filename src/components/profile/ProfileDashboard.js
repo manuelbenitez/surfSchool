@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import GeneralInformation from './GeneralInformation'
 import LessonsInformation from './LessonsInformation'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { firestoreConnect } from 'react-redux-firebase'
 
 //theme
 import styles from '../../theme/theme'
@@ -90,20 +92,26 @@ const ProfileDashboard = (props) => {
                 </List>
             </Drawer>
             <div className={theme.profileComponents}>
-            {
-                            componentToRender === 'Basic Information' ? <GeneralInformation user={user}/> :
-                                componentToRender === 'Lessons Information' ? <LessonsInformation /> :
-                                    <div>Nada</div>
-            }
+                {
+                    componentToRender === 'Basic Information' ? <GeneralInformation user={user} /> :
+                        componentToRender === 'Lessons Information' ? <LessonsInformation /> :
+                            <div>Nada</div>
+                }
             </div>
         </Grid>
     )
 }
 
 const mapStateToProps = (state) => {
-    return{
-        profile: state.profile.user
+    console.log(state)
+    return {
+        profile: state.firestore.ordered.users_instructors
     }
 }
 
-export default connect(mapStateToProps)(ProfileDashboard)
+export default compose(
+connect(mapStateToProps),
+firestoreConnect([
+    { collection: `users_instructors`},
+])
+)(ProfileDashboard)

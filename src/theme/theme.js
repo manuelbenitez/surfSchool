@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         justifyContent: 'center',
         backgroundColor: 'rgba(255, 255, 255, 0.226)',
-    }
+    },
 
 }))
 
