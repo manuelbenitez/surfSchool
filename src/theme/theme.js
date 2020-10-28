@@ -77,11 +77,21 @@ const useStyles = makeStyles(theme => ({
 
     },
     profileDrawer: {
-        background: '#32908F',
-        width: 'drawerWidth',
         flexShrink: '0',
         zIndex: '0',
     },
+    profileComponents: {
+        background: '#A3E7FC',
+        marginLeft: '300px'
+    },
+    generalInfoPaper: {
+        marginTop: '8vh',
+        maxWidth: '1500px',
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.226)',
+    }
 
 }))
 

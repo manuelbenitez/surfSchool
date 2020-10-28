@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import GeneralInformation from './GeneralInformation'
 import LessonsInformation from './LessonsInformation'
+import { connect } from 'react-redux'
 
 //theme
 import styles from '../../theme/theme'
@@ -39,11 +40,14 @@ const categories = [
 
 ];
 
-const ProfileDashboard = () => {
+const ProfileDashboard = (props) => {
 
     var [componentToRender, setComponentToRender] = useState('Basic Information')
 
     const theme = styles()
+
+    const user = props.profile
+
     return (
         <Grid className='main'>
             <Drawer className={theme.profileDrawer} variant='permanent'>
@@ -85,9 +89,9 @@ const ProfileDashboard = () => {
 
                 </List>
             </Drawer>
-            <div>
+            <div className={theme.profileComponents}>
             {
-                            componentToRender === 'Basic Information' ? <GeneralInformation /> :
+                            componentToRender === 'Basic Information' ? <GeneralInformation user={user}/> :
                                 componentToRender === 'Lessons Information' ? <LessonsInformation /> :
                                     <div>Nada</div>
             }
@@ -96,4 +100,10 @@ const ProfileDashboard = () => {
     )
 }
 
-export default ProfileDashboard
+const mapStateToProps = (state) => {
+    return{
+        profile: state.profile.user
+    }
+}
+
+export default connect(mapStateToProps)(ProfileDashboard)

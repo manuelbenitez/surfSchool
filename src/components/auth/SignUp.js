@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, FormControl, Grid, Input, InputLabel, Paper, ThemeProvider } from '@material-ui/core'
+import { Button, FormControl, Grid, Input, InputLabel, Paper } from '@material-ui/core'
 
 import styles from '../../theme/theme'
 
