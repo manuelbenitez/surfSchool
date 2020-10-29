@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import GeneralInformation from './GeneralInformation'
 import LessonsInformation from './LessonsInformation'
 import { connect } from 'react-redux'
-import { compose } from 'redux'
-import { firestoreConnect } from 'react-redux-firebase'
 
 //theme
 import styles from '../../theme/theme'
@@ -106,7 +104,6 @@ const ProfileDashboard = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.firebase)
     return {
         profile: state.firebase.profile,
         auth: state.firebase.auth
