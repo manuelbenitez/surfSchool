@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { Button, FormControl, Grid, Input, InputLabel, Paper } from '@material-ui/core'
 
-import styles from '../../theme/theme'
+import { signUp } from '../../store/actions/authActions'
 
-const SignUp = () => {
+import styles from '../../theme/theme'
+import { connect } from 'react-redux'
+
+const SignUp = (props) => {
 
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
@@ -35,11 +38,24 @@ const SignUp = () => {
                         </FormControl>
                     </Paper>
                     <br />
-                    <Button className={theme.signedOutButton} type='submit' variant='contained'>Sign Up</Button>
+                    <Button className={theme.signedOutButton} onClick={e => props.signUp(fullName, email, password)} type='submit' variant='contained'>Sign Up</Button>
+                    <p>{props.authError}</p>
                 </form>
             </Paper>
         </Grid>
     )
 }
 
-export default SignUp
+const mapStateToProps = (state) => {
+    return {
+        authError: state.auth.authError
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signUp: (fullName, email, password) => dispatch(signUp(fullName, email, password))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

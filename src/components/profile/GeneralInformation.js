@@ -6,9 +6,10 @@ import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@materi
 import styles from '../../theme/theme'
 
 
-const GeneralInformation = (user) => {
+const GeneralInformation = (props) => {
 
     const theme = styles()
+
     return (
 
         <Paper className={theme.generalInfoPaper}>
@@ -20,16 +21,28 @@ const GeneralInformation = (user) => {
                 </TableHead>
                 <TableBody>
                     <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell></TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>{props.email}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>Email</TableCell>
-                        <TableCell></TableCell>
+                        <TableCell>Name</TableCell>
+                        <TableCell>{props.user.fullName}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Languages</TableCell>
-                        <TableCell></TableCell>
+                        <TableCell>{props.user.languages}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Description</TableCell>
+                        <TableCell>{props.user.description}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Cualifications</TableCell>
+                        <TableCell>{props.user.cualifications}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>Date of Birth</TableCell>
+                        <TableCell>{props.user.dateOfBirth}</TableCell>
                     </TableRow>
                 </TableBody>
             </Table>

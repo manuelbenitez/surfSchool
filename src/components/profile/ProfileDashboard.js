@@ -16,6 +16,7 @@ import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
+import { Redirect } from 'react-router-dom'
 
 const categories = [
     {
@@ -48,7 +49,9 @@ const ProfileDashboard = (props) => {
 
     const theme = styles()
 
-    const user = props.profile
+    const { profile, auth } = props
+
+    if (!auth.uid) return <Redirect to='/signin'/>
 
     return (
         <Grid className='main'>
@@ -93,7 +96,7 @@ const ProfileDashboard = (props) => {
             </Drawer>
             <div className={theme.profileComponents}>
                 {
-                    componentToRender === 'Basic Information' ? <GeneralInformation user={user} /> :
+                    componentToRender === 'Basic Information' ? <GeneralInformation user={profile} email={auth.email}/> :
                         componentToRender === 'Lessons Information' ? <LessonsInformation /> :
                             <div>Nada</div>
                 }
@@ -103,15 +106,15 @@ const ProfileDashboard = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
-        profile: state.firestore.ordered.users_instructors
+        profile: state.firebase.profile,
+        auth: state.firebase.auth
     }
 }
 
 export default compose(
-connect(mapStateToProps),
-firestoreConnect([
-    { collection: `users_instructors`},
-])
+    connect(mapStateToProps),
+    firestoreConnect([
+        { collection: `users_instructors` },
+    ])
 )(ProfileDashboard)

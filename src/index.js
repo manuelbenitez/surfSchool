@@ -12,26 +12,31 @@ import { getFirebase, isLoaded, ReactReduxFirebaseProvider } from 'react-redux-f
 import fbConfig from './config/firebase'
 import firebase from 'firebase/app'
 import { CircularProgress } from '@material-ui/core';
-//theme
-import styles from './theme/theme'
 
 const store = createStore(rootReducer, compose(
   applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
-  reduxFirestore(fbConfig),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  reduxFirestore(firebase, fbConfig)
 )
 )
 
+const rrfConfig = {
+  userProfile: 'users_instructors',
+  useFirestoreForProfile: true
+}
+
 const rrfProps = {
   firebase,
-  config: fbConfig,
+  config: rrfConfig,
   dispatch: store.dispatch,
-  createFirestoreInstance
+  createFirestoreInstance,
+  presence: 'presence',
+  sessions: 'sessions'
 }
 
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth)
-  const theme = styles()
-  if (!isLoaded(auth)) return <CircularProgress/>;
+  if (!isLoaded(auth)) return <CircularProgress />;
   return children
 }
 

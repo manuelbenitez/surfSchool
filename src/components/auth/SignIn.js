@@ -14,13 +14,20 @@ const SignIn = (props) => {
 
     const theme = styles()
 
-    const { authError } = props
+    const { authError, uid } = props
+
+    function handleSubmit(e){
+        e.preventDefault()
+        props.signIn(email, password)
+        const history = props.history
+        history.push('/profile/' + uid, null)
+    }   
 
     return (
 
         <Grid container className='main'>
             <Paper className={theme.signedInPaper}>
-                <form onSubmit={e => e.preventDefault() && false}>
+                <form onSubmit={e => handleSubmit(e)}>
                     <Paper>
                         <FormControl margin='normal' required={true} fullWidth>
                             <InputLabel htmlFor='email'>Email Address</InputLabel>
@@ -35,7 +42,7 @@ const SignIn = (props) => {
                         </FormControl>
                     </Paper>
                     <br />
-                    <Button type='submit' variant='contained' onClick={e => props.signIn(email, password)}>Log in</Button>
+                    <Button variant='contained' type='submit'>Log in</Button>
                     <div>
                         {authError ? <p>{authError}</p> : null}
                     </div>
@@ -48,7 +55,8 @@ const SignIn = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        authError: state.auth.authError
+        authError: state.auth.authError,
+        uid: state.firebase.auth.uid,
     }
 }
 

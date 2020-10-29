@@ -13,10 +13,9 @@ import styles from '../../theme/theme'
 const Navbar = (props) => {
     const theme = styles()
 
-    const { auth } = props
-    // console.log(auth)
+    const { auth, profile } = props
 
-    const links = auth.uid ? <SignedInLinks userName={auth.displayName}/> : <SignedOutLinks />
+    const links = auth.uid ? <SignedInLinks userName={profile.fullName}/> : <SignedOutLinks />
     return (
         <AppBar className={theme.appBar}>
             <Toolbar>
@@ -30,7 +29,8 @@ const Navbar = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        profile: state.firebase.profile
     }
 }
 
