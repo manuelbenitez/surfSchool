@@ -6,6 +6,7 @@ import { Button, FormControl, Grid, Input, InputLabel, Paper } from '@material-u
 
 //theme 
 import styles from '../../theme/theme'
+import { Redirect } from 'react-router-dom'
 
 const SignIn = (props) => {
 
@@ -14,14 +15,15 @@ const SignIn = (props) => {
 
     const theme = styles()
 
-    const { authError, uid } = props
+    const { authError, uid, auth } = props
+    const url = '/profile/' + {uid}
 
     function handleSubmit(e){
         e.preventDefault()
         props.signIn(email, password)
-        const history = props.history
-        history.push('/profile/' + uid, null)
     }   
+
+    if(auth.uid) return <Redirect to={url}/>
 
     return (
 
@@ -56,6 +58,7 @@ const SignIn = (props) => {
 const mapStateToProps = (state) => {
     return {
         authError: state.auth.authError,
+        auth: state.firebase.auth,
         uid: state.firebase.auth.uid,
     }
 }

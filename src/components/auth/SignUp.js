@@ -5,6 +5,7 @@ import { signUp } from '../../store/actions/authActions'
 
 import styles from '../../theme/theme'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 const SignUp = (props) => {
 
@@ -13,6 +14,12 @@ const SignUp = (props) => {
     const [password, setPassword] = useState('')
 
     const theme = styles()
+
+    const { auth } = props
+
+    const url = '/profile/' + auth.uid
+
+    if (auth.uid) return <Redirect to={url} />
     return (
         <Grid container className='main'>
             <Paper className={theme.signedOutPaper}>
@@ -48,7 +55,8 @@ const SignUp = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        authError: state.auth.authError
+        authError: state.auth.authError,
+        auth: state.firebase.auth,
     }
 }
 

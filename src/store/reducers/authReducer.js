@@ -30,6 +30,18 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 authError: action.err.message
             }
+        // case 'CREATE_GROUP_LESSONS_DB':
+        //     console.log('GL CREATED!')
+        //     return state
+        // case 'CREATE_GROUP_LESSONS_DB_ERROR':
+        //     console.log('GL ERROR')
+        //     return state
+        // case 'CREATE_PRIVATE_LESSONS_DB':
+        //     console.log('PL CREATED!')
+        //     return state
+        // case 'CREATE_PRIVATE_LESSONS_DB_ERROR':
+        //     console.log('PL ERROR')
+        //     return state
         default:
             return state
     }

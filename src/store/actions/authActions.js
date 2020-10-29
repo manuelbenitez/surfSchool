@@ -41,4 +41,41 @@ export const signUp = (fullName, email, password) => {
     }
 }
 
+// export const createGroupLessonsDb = (userUid) => {
+//     return(dispatch, getState, { getFirebase }) => {
+//         const firestore = getFirebase().firestore()
+
+//         firestore.collection(`users_instructors/${userUid}/group_lessons/information`).set({
+//             price: '',
+//             level: '',
+//             description: '',
+//             max: '',
+//             min: '',
+//             places:'',
+//             times: '',
+//             dates: '',
+//         }).then(() => dispatch({type: 'CREATE_GROUP_LESSONS_DB'}))
+//         .catch(err => dispatch({type: 'CREATE_GROUP_LESSONS_DB_ERROR', err}))
+// }
+// }
+
+// export const createPrivateLessonsDb = (userUid) => {
+//     return(dispatch, getState, { getFirebase }) => {
+//         const firestore = getFirebase().firestore()
+
+//         firestore.collection(`users_instructors/${userUid}/private_lessons/information`).set({
+//             price: '',
+//             level: '',
+//             description: '',
+//             max: '',
+//             min: '',
+//             places:'',
+//             times: '',
+//             dates: '',
+//         }).then(() => dispatch({type: 'CREATE_PRIVATE_LESSONS_DB'}))
+//         .catch(err => dispatch({type: 'CREATE_PRIVATE_LESSONS_DB_ERROR', err}))
+// }
+// }
+
+
 

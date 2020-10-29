@@ -51,7 +51,7 @@ const ProfileDashboard = (props) => {
 
     const { profile, auth } = props
 
-    if (!auth.uid) return <Redirect to='/signin'/>
+    if (!auth.uid) return <Redirect to='/signin' />
 
     return (
         <Grid className='main'>
@@ -96,7 +96,7 @@ const ProfileDashboard = (props) => {
             </Drawer>
             <div className={theme.profileComponents}>
                 {
-                    componentToRender === 'Basic Information' ? <GeneralInformation user={profile} email={auth.email}/> :
+                    componentToRender === 'Basic Information' ? <GeneralInformation user={profile} email={auth.email} /> :
                         componentToRender === 'Lessons Information' ? <LessonsInformation /> :
                             <div>Nada</div>
                 }
@@ -106,15 +106,12 @@ const ProfileDashboard = (props) => {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state.firebase)
     return {
         profile: state.firebase.profile,
         auth: state.firebase.auth
     }
 }
 
-export default compose(
-    connect(mapStateToProps),
-    firestoreConnect([
-        { collection: `users_instructors` },
-    ])
-)(ProfileDashboard)
+
+export default connect(mapStateToProps)(ProfileDashboard)

@@ -12,9 +12,7 @@ const SignedInLinks = (props) => {
 
     const { uid } = props
 
-
     const url = `/profile/${uid}`
-
 
     return (
         <div>
