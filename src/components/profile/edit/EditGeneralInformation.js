@@ -124,7 +124,7 @@ const EditGeneralInformation = (props) => {
     return (
         <Fragment>
             <Tooltip title='Edit Details'>
-                <IconButton onClick={e => handleOpenClick(props.component)}>
+                <IconButton onClick={() => handleOpenClick(props.component)}>
                     <EditIcon />
                 </IconButton>
             </Tooltip>
@@ -238,7 +238,6 @@ const EditGeneralInformation = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.profile)
     return {
         profile: state.firebase.profile
     }

@@ -29,7 +29,7 @@ export const editDescription = (description) => {
 
         firestore.collection('users_instructors').doc(uid).update({
             description: description
-        }).then(() => dispatch({ type: 'EDIT_DESCRIPTION', description }))
+        }).then(() => dispatch({ type: 'EDIT_DESCRIPTION' }))
             .catch(err => dispatch({ type: 'EDIT_DESCRIPTION_ERROR', err }))
     }
 }
@@ -41,7 +41,7 @@ export const editCualifications = (cualifications) => {
 
         firestore.collection('users_instructors').doc(uid).update({
             cualifications: cualifications
-        }).then(() => dispatch({ type: 'EDIT_CUALIFICATIONS', cualifications }))
+        }).then(() => dispatch({ type: 'EDIT_CUALIFICATIONS' }))
             .catch(err => dispatch({ type: 'EDIT_CUALIFICATIONS_ERROR', err }))
     }
 }

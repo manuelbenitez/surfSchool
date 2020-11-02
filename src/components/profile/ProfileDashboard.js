@@ -15,6 +15,8 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
 import { Redirect } from 'react-router-dom'
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
 
 const categories = [
     {
@@ -41,13 +43,15 @@ const categories = [
 
 ];
 
+
 const ProfileDashboard = (props) => {
 
     var [componentToRender, setComponentToRender] = useState('Basic Information')
 
     const theme = styles()
 
-    const { profile, auth } = props
+    const { profile, auth, groupLessons, privateLessons } = props
+
 
     if (!auth.uid) return <Redirect to='/signin' />
 
@@ -95,7 +99,7 @@ const ProfileDashboard = (props) => {
             <div className={theme.profileComponents}>
                 {
                     componentToRender === 'Basic Information' ? <GeneralInformation user={profile} email={auth.email} /> :
-                        componentToRender === 'Lessons Information' ? <LessonsInformation /> :
+                        componentToRender === 'Lessons Information' ? <LessonsInformation group={groupLessons} private={privateLessons} /> :
                             <div>Nada</div>
                 }
             </div>
@@ -106,9 +110,30 @@ const ProfileDashboard = (props) => {
 const mapStateToProps = (state) => {
     return {
         profile: state.firebase.profile,
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        groupLessons: state.firestore.data['group'],
+        privateLessons: state.firestore.data['private'],
     }
 }
 
-
-export default connect(mapStateToProps)(ProfileDashboard)
+export default compose(connect(mapStateToProps),
+    firestoreConnect(props =>
+        [{
+            collection: 'users_instructors',
+            doc: props.auth.uid,
+            storeAs: 'group',
+            subcollections: [{
+                collection: 'group_lessons',
+                doc: 'information',
+            }]
+        },
+        {
+            collection: 'users_instructors',
+            doc: props.auth.uid,
+            storeAs: 'private',
+            subcollections: [{
+                collection: 'private_lessons',
+                doc: 'information',
+            }]
+        }]
+    ))(ProfileDashboard)

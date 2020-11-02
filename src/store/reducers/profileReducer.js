@@ -2,6 +2,8 @@ const initState = {
     editError: null,
     cualifications: null,
     languages: null,
+    group: {},
+    private: {},
 
 }
 const profileReducer = (state = initState, action) => {
