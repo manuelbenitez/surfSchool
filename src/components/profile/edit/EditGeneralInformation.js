@@ -3,91 +3,12 @@ import { connect } from 'react-redux'
 import { editFullName, editLanguages, editDescription, editCualifications, editDateOfBirth } from '../../../store/actions/profileActions'
 
 
-import { Dialog, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, Paper, Tooltip, Select, Input, MenuItem, Button } from '@material-ui/core'
+import { Dialog, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, Paper, Tooltip, Select, Input, MenuItem, Button, Box, TextField, TextareaAutosize } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
+import { Autocomplete } from 'formik-material-ui-lab'
+import { languagesList, cualificationsList } from '../../../data/data'
+import { Field, Form, Formik } from 'formik'
 
-
-
-const languagesList = [
-    'Afrikaans',
-    'Albanian',
-    'Arabic',
-    'Armenian',
-    'Basque',
-    'Bengali',
-    'Bulgarian',
-    'Catalan',
-    'Cambodian',
-    'Chinese (Mandarin)',
-    'Croatian',
-    'Czech',
-    'Danish',
-    'Dutch',
-    'English',
-    'Estonian',
-    'Fiji',
-    'Finnish',
-    'French',
-    'Georgian',
-    'German',
-    'Greek',
-    'Gujarati',
-    'Hebrew',
-    'Hindi',
-    'Hungarian',
-    'Icelandic',
-    'Indonesian',
-    'Irish',
-    'Italian',
-    'Japanese',
-    'Javanese',
-    'Korean',
-    'Latin',
-    'Latvian',
-    'Lithuanian',
-    'Macedonian',
-    'Malay',
-    'Malayalam',
-    'Maltese',
-    'Maori',
-    'Marathi',
-    'Mongolian',
-    'Nepali',
-    'Norwegian',
-    'Persian',
-    'Polish',
-    'Portuguese',
-    'Punjabi',
-    'Quechua',
-    'Romanian',
-    'Russian',
-    'Samoan',
-    'Serbian',
-    'Slovak',
-    'Slovenian',
-    'Spanish',
-    'Swahili',
-    'Swedish ',
-    'Tamil',
-    'Tatar',
-    'Telugu',
-    'Thai',
-    'Tibetan',
-    'Tonga',
-    'Turkish',
-    'Ukrainian',
-    'Urdu',
-    'Uzbek',
-    'Vietnamese',
-    'Welsh',
-    'Xhosa',
-
-]
-const cualificationsList = [
-    'Level 1',
-    'Level 2',
-    'Level 3',
-];
 
 
 
@@ -120,7 +41,6 @@ const EditGeneralInformation = (props) => {
         }
     }
 
-
     return (
         <Fragment>
             <Tooltip title='Edit Details'>
@@ -131,17 +51,18 @@ const EditGeneralInformation = (props) => {
 
 
             <Dialog open={openFullName}>
-                <DialogTitle>Full Name</DialogTitle>
                 <DialogContent>
                     <Paper>
                         <FormControl>
-                            <InputLabel>Full Name</InputLabel>
-                            <Input
+                            <TextField
                                 onChange={(e) => setFullName(e.target.value)}
                                 type='text'
+                                label='Full Name'
+                                autoFocus={true}
+                                
                             />
                             <br />
-                            <Button onClick={function(){ props.editFullName(fullName) ; setOpenFullName(false)}}>Save</Button>
+                            <Button onClick={function () { props.editFullName(fullName); setOpenFullName(false) }}>Save</Button>
                             <Button onClick={() => setOpenFullName(false)}>Cancel</Button>
                         </FormControl>
                     </Paper>
@@ -149,42 +70,79 @@ const EditGeneralInformation = (props) => {
             </Dialog>
 
             <Dialog open={openLanguages}>
-                <DialogTitle>Languages</DialogTitle>
                 <DialogContent>
-                    <Paper>
-                        <FormControl>
-                            <InputLabel>Languages</InputLabel>
-                            <Select
-                                input={<Input />}
-                                defaultValue=''
-                                onChange={(e) => setLanguages(e.target.value)}
-                            >
-                                {languagesList.map((language) => (
-                                    <MenuItem key={language} value={language}>
-                                        {language}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            <br />
-                            <Button onClick={function(){ props.editLanguages(languages) ; setOpenLanguages(false)}}>Save</Button>
-                            <Button onClick={() => setOpenLanguages(false)}>Cancel</Button>
-                        </FormControl>
-                    </Paper>
+                    <Formik
+                        initialValues={{
+                            languages: [],
+                            languagesArray: '',
+                        }}
+                        validate={(values) => {
+                            const errors = {};
+                            if (values.languages.length>=0) {
+                                values.languagesArray = values.languages.toString();
+                                setLanguages(values.languagesArray)
+                            }
+                            return errors;
+                        }}
+                        onSubmit={(values, { setSubmitting }) => {
+                            setTimeout(() => {
+                                setSubmitting(false);
+                                alert(JSON.stringify(values, null, 2));
+                            }, 500);
+                        }}
+                    >
+                        {({ submitForm, isSubmitting, touched, errors }) => (
+                            <Form>
+                                <Box margin={1}>
+                                    <Field
+                                        name="languages"
+                                        multiple
+                                        component={Autocomplete}
+                                        options={languagesList}
+                                        style={{ width: 300 }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                error={touched['languages'] && !!errors['languages']}
+                                                helperText={touched['languages'] && errors['languages']}
+                                                label="Languages"
+                                                variant="outlined"
+                                            />
+                                        )}
+                                    />
+                                </Box>
+                                <Box margin={1}>
+                                    <Button                            
+                                        onClick={function() { props.editLanguages(languages) ; setOpenLanguages(false)}}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Button
+                                       onClick={() => setOpenLanguages(false)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </Box>
+                            </Form>
+                        )}
+                    </Formik>
                 </DialogContent>
             </Dialog>
 
             <Dialog open={openDescription}>
-                <DialogTitle>Description</DialogTitle>
                 <DialogContent>
                     <Paper>
                         <FormControl>
-                            <InputLabel>Description</InputLabel>
-                            <Input
+                            <TextareaAutosize
                                 onChange={e => setDescription(e.target.value)}
                                 type='text'
+                                rowsMin='6'
+                                maxLength='500'
+                                placeholder='Description'
+                                style={{width: 300}}
                             />
                             <br />
-                            <Button onClick={function(){ props.editDescription(description) ; setOpenDescription(false)}}>Save</Button>
+                            <Button onClick={function () { props.editDescription(description); setOpenDescription(false) }}>Save</Button>
                             <Button onClick={() => setOpenDescription(false)}>Cancel</Button>
                         </FormControl>
                     </Paper>
@@ -209,7 +167,7 @@ const EditGeneralInformation = (props) => {
                                 ))}
                             </Select>
                             <br />
-                            <Button onClick={function(){ props.editCualifications(cualifications) ; setOpenCualifications(false)}}>Save</Button>
+                            <Button onClick={function () { props.editCualifications(cualifications); setOpenCualifications(false) }}>Save</Button>
                             <Button onClick={() => setOpenCualifications(false)}>Cancel</Button>
                         </FormControl>
                     </Paper>
@@ -226,7 +184,7 @@ const EditGeneralInformation = (props) => {
                                 type='date'
                             />
                             <br />
-                            <Button onClick={function(){props.editDateOfBirth(dateOfBirth) ; setOpenDateOfBirth(false)}}>Save</Button>
+                            <Button onClick={function () { props.editDateOfBirth(dateOfBirth); setOpenDateOfBirth(false) }}>Save</Button>
                             <Button onClick={() => setOpenDateOfBirth(false)}>Cancel</Button>
                         </FormControl>
                     </Paper>
@@ -254,4 +212,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditGeneralInformation)
-
