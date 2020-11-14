@@ -123,7 +123,14 @@ const EditGroupLessons = (props) => {
         props.editTimes(timesString)
         setTimesOpen(false)
         setError('')
+        setError('')
+        setStartHour('')
+        setStartMinute('')
+        setEndHour('')
+        setEndMinute('')
     }
+
+    
     return (
         <Fragment>
             <Tooltip title="Edit Details">

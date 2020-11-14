@@ -126,6 +126,10 @@ export const EditPrivateLessons = (props) => {
         props.editTimes(timesString)
         setTimesOpen(false)
         setError('')
+        setStartHour('')
+        setStartMinute('')
+        setEndHour('')
+        setEndMinute('')
     }
 
 
