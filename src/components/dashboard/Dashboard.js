@@ -29,6 +29,7 @@ const Dashboard = () => {
                                 <InputLabel>Where?</InputLabel>
                                 <Select
                                     className={theme.dashboardSelect}
+                                    defaultValue=''
                                     input={<Input />}
                                 >
                                     {names.map((name) => (

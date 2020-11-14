@@ -19,8 +19,8 @@ function groupLessons(props, theme) {
                 </TableHead>
                 <TableBody>
                     <TableRow>
-                        <TableCell>Price</TableCell>
-                        <TableCell>{props.group.price}</TableCell>
+                        <TableCell>Price (per hour per person)</TableCell>
+                        <TableCell>$ {props.group.price}</TableCell>
                         <TableCell><EditGroupLessons component='price' /></TableCell>
                     </TableRow>
                     <TableRow>
@@ -39,19 +39,14 @@ function groupLessons(props, theme) {
                         <TableCell><EditGroupLessons component='places' /></TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>Maximum amount of students</TableCell>
-                        <TableCell>{props.group.max}</TableCell>
-                        <TableCell><EditGroupLessons component='max' /></TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Minimum amount of students</TableCell>
-                        <TableCell>{props.group.min}</TableCell>
-                        <TableCell><EditGroupLessons component='min' /></TableCell>
+                        <TableCell>Minimum and maximum amount of students</TableCell>
+                        <TableCell>{props.group.min} - {props.group.max}</TableCell>
+                        <TableCell><EditGroupLessons component='students' /></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Times</TableCell>
                         <TableCell>{props.group.times}</TableCell>
-                        <TableCell><EditGroupLessons component='times' /></TableCell>
+                        <TableCell><EditGroupLessons component='times' times={props.private.times} /></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Dates</TableCell>
@@ -94,19 +89,14 @@ function privateLessons(props, theme) {
                         <TableCell><EditPrivateLessons component='places'/></TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell>Maximum amount of students</TableCell>
-                        <TableCell>{props.private.max}</TableCell>
-                        <TableCell><EditPrivateLessons component='max'/></TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Minimum amount of students</TableCell>
-                        <TableCell>{props.private.min}</TableCell>
-                        <TableCell><EditPrivateLessons component='min'/></TableCell>
+                        <TableCell>Minimum and maximum amount of students</TableCell>
+                        <TableCell>{props.private.min} - {props.private.max}</TableCell>
+                        <TableCell><EditPrivateLessons component='students' /></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Times</TableCell>
                         <TableCell>{props.private.times}</TableCell>
-                        <TableCell><EditPrivateLessons component='times'/></TableCell>
+                        <TableCell><EditPrivateLessons component='times' times={props.private.times}/></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Dates</TableCell>

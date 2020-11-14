@@ -28,7 +28,7 @@ const GeneralInformation = (props) => {
                     <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell>{props.user.fullName}</TableCell>
-                        <TableCell><EditGeneralInformation component='fullName'/></TableCell>
+                        <TableCell><EditGeneralInformation component='fullName' user={props.user}/></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Languages</TableCell>

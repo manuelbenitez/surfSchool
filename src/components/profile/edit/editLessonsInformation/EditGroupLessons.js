@@ -1,9 +1,12 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { editPrice, editLevel, editDescription, editPlaces, editMax, editMin, editTimes } from '../../../../store/actions/groupLessonsActions'
-import { Button, Dialog, DialogContent, DialogTitle, IconButton, InputLabel, Paper, Tooltip, FormControl, Input } from '@material-ui/core'
+import { Button, Dialog, DialogContent, DialogTitle, IconButton, InputLabel, Paper, Tooltip, FormControl, Input, Select, MenuItem, TextareaAutosize, Typography, ButtonGroup } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
+import CloseIcon from '@material-ui/icons/Close';
+
+import { levelsList, placesList, hoursList, minutesList } from '../../../../data/data'
 
 const EditGroupLessons = (props) => {
 
@@ -12,8 +15,7 @@ const EditGroupLessons = (props) => {
     const [levelOpen, setLevelOpen] = useState(false)
     const [descriptionOpen, setDescriptionOpen] = useState(false)
     const [placesOpen, setPlacesOpen] = useState(false)
-    const [maxOpen, setMaxOpen] = useState(false)
-    const [minOpen, setMinOpen] = useState(false)
+    const [studentsOpen, setStudentsOpen] = useState(false)
     const [timesOpen, setTimesOpen] = useState(false)
 
 
@@ -23,8 +25,15 @@ const EditGroupLessons = (props) => {
     const [places, setPlaces] = useState('')
     const [max, setMax] = useState('')
     const [min, setMin] = useState('')
-    const [times, setTimes] = useState('')
+    const [error, setError] = useState('')
 
+
+    //TIMES DIALOG CONSTANTS
+    const [times, setTimes] = useState('')
+    const [startHour, setStartHour] = useState('')
+    const [startMinute, setStartMinute] = useState('')
+    const [endHour, setEndHour] = useState('')
+    const [endMinute, setEndMinute] = useState('')
 
     function handleOpenClick(component) {
         if (component === 'price') {
@@ -35,13 +44,85 @@ const EditGroupLessons = (props) => {
             setDescriptionOpen(true)
         } else if (component === 'places') {
             setPlacesOpen(true)
-        } else if (component === 'max') {
-            setMaxOpen(true)
-        } else if (component === 'min') {
-            setMinOpen(true)
+        } else if (component === 'students') {
+            setStudentsOpen(true)
         } else if (component === 'times') {
             setTimesOpen(true)
         }
+    }
+
+    function validateMaxMin() {
+        if (max < min) {
+            setError("Maximum amout of students can't be smaller than the minimum")
+        } else {
+            props.editMax(max)
+            props.editMin(min)
+            setError('')
+            setStudentsOpen(false)
+        }
+    }
+    useEffect(() => {
+        if (props.times !== undefined) {
+            setTimes(props.times)
+        }
+    }, [props.times])
+
+    const timesArray = times.split(',')
+
+
+    //
+    //
+    //TIMES DIALOG FUNCTIONS
+    //
+    //
+    function addTime() {
+
+
+        var newStartTime = startHour.concat(':' + startMinute + '-')
+        var newEndTime = endHour.concat(':' + endMinute)
+        var isDuplicate = false
+
+        //Checks for duplicated values and sets isDuplicate
+        timesArray.map(time => (
+            time === newStartTime.concat(newEndTime) ? isDuplicate = true : null
+        ))
+
+        //Checks if start hour is not later than end hour
+        // and Checks if any of the values is empty
+        // and if duplicate is true, sets the error to 'Duplicate  Time'
+        if (parseInt(startHour) > parseInt(endHour)) {
+            setError("Start hour can't be earlier than the end hour")
+        } else if (startHour === '' || endHour === '' || startMinute === '' || endMinute === '') {
+            setError("You must select a value for all times")
+        } else if (isDuplicate) {
+            setError('Duplicate time')
+        } else {
+            setError('')
+            setTimes(times.concat(newStartTime.concat(newEndTime, ',')))
+        }
+    }
+
+
+    //Dispatch the action to delete the selected item from the data base
+    function deleteTimes(timeToDelete) {
+        for (var i = 0; i < timesArray.length; i++) {
+            if (timesArray[i] === timeToDelete) {
+                timesArray.splice(i, 1)
+
+                //dispatch that updates the database with the new array
+                var timesString = timesArray.toString()
+                props.editTimes(timesString)
+
+            }
+        }
+    }
+
+    // Saves the times to the data base
+    function saveTimes() {
+        var timesString = timesArray.toString()
+        props.editTimes(timesString)
+        setTimesOpen(false)
+        setError('')
     }
     return (
         <Fragment>
@@ -68,14 +149,18 @@ const EditGroupLessons = (props) => {
             </Dialog>
 
             <Dialog open={levelOpen}>
-                <DialogTitle>Level</DialogTitle>
                 <DialogContent>
                     <Paper>
                         <FormControl>
                             <InputLabel>Level</InputLabel>
-                            <Input
+                            <Select
                                 type='text'
-                                onChange={(e) => setLevel(e.target.value)} />
+                                defaultValue=''
+                                onChange={(e) => setLevel(e.target.value)} >
+                                {levelsList.map((level) => (
+                                    <MenuItem key={level} value={level}>{level}</MenuItem>
+                                ))}
+                            </Select>
                             <Button onClick={function () { props.editLevel(level); setLevelOpen(false) }}>Save</Button>
                             <Button onClick={function () { setLevelOpen(false) }}>Cancel</Button>
                         </FormControl>
@@ -84,14 +169,17 @@ const EditGroupLessons = (props) => {
             </Dialog>
 
             <Dialog open={descriptionOpen}>
-                <DialogTitle>Description</DialogTitle>
                 <DialogContent>
                     <Paper>
                         <FormControl>
-                            <InputLabel>Description</InputLabel>
-                            <Input
+                            <TextareaAutosize
+                                onChange={e => setDescription(e.target.value)}
                                 type='text'
-                                onChange={(e) => setDescription(e.target.value)} />
+                                rowsMin='6'
+                                maxLength='500'
+                                placeholder='Description'
+                                style={{ width: 300 }}
+                            />
                             <Button onClick={function () { props.editDescription(description); setDescriptionOpen(false) }}>Save</Button>
                             <Button onClick={function () { setDescriptionOpen(false) }}>Cancel</Button>
                         </FormControl>
@@ -105,10 +193,14 @@ const EditGroupLessons = (props) => {
                     <Paper>
                         <FormControl>
                             <InputLabel>Places</InputLabel>
-                            <Input
+                            <Select
                                 type='text'
-                                onChange={(e) => setPlaces(e.target.value)}
-                            />
+                                defaultValue=''
+                                onChange={e => setPlaces(e.target.value)}>
+                                {placesList.map((place) => (
+                                    <MenuItem key={place} value={place}>{place}</MenuItem>
+                                ))}
+                            </Select>
                             <Button onClick={function () { props.editPlaces(places); setPlacesOpen(false) }}>Save</Button>
                             <Button onClick={function () { setPlacesOpen(false) }}>Cancel</Button>
                         </FormControl>
@@ -116,52 +208,128 @@ const EditGroupLessons = (props) => {
                 </DialogContent>
             </Dialog>
 
-            <Dialog open={maxOpen}>
-                <DialogTitle>Maximum amout of students</DialogTitle>
+            <Dialog open={studentsOpen}>
+                <DialogTitle>Amout of students</DialogTitle>
                 <DialogContent>
                     <Paper>
                         <FormControl>
-                            <InputLabel>Maximum amout of students</InputLabel>
-                            <Input
+                            <Select
                                 type='text'
-                                onChange={(e) => setMax(e.target.value)} />
-                            <Button onClick={function () { props.editMax(max); setMaxOpen(false) }}>Save</Button>
-                            <Button onClick={function () { setMaxOpen(false) }}>Cancel</Button>
+                                defaultValue=''
+                                placeholder='Minimum amount of students'
+                                onChange={e => setMin(e.target.value)}
+                                style={{ width: 100 }}>
+                                <MenuItem value='1'>1</MenuItem>
+                                <MenuItem value='2'>2</MenuItem>
+                                <MenuItem value='3'>3</MenuItem>
+                                <MenuItem value='4'>4</MenuItem>
+                                <MenuItem value='5'>5</MenuItem>
+                                <MenuItem value='6'>6</MenuItem>
+                                <MenuItem value='7'>7</MenuItem>
+                                <MenuItem value='8'>8</MenuItem>
+                            </Select>
                         </FormControl>
+                        <br></br>
+                        <FormControl>
+                            <Select
+                                type='text'
+                                defaultValue=''
+                                placeholder='Maximum amount of students'
+                                onChange={e => setMax(e.target.value)}
+                                style={{ width: 100 }}>
+                                <MenuItem value='1'>1</MenuItem>
+                                <MenuItem value='2'>2</MenuItem>
+                                <MenuItem value='3'>3</MenuItem>
+                                <MenuItem value='4'>4</MenuItem>
+                                <MenuItem value='5'>5</MenuItem>
+                                <MenuItem value='6'>6</MenuItem>
+                                <MenuItem value='7'>7</MenuItem>
+                                <MenuItem value='8'>8</MenuItem>
+                            </Select>
+                        </FormControl>
+                        {error ? <Typography color='error' variant='body1'>{error}</Typography> : null}
+                        <br></br>
+                        <Button onClick={function () { validateMaxMin() }}>Save</Button>
+                        <Button onClick={function () { setStudentsOpen(false) }}>Cancel</Button>
                     </Paper>
                 </DialogContent>
             </Dialog>
 
-            <Dialog open={minOpen}>
-                <DialogTitle>Minimum amount of students</DialogTitle>
-                <DialogContent>
-                    <Paper>
-                        <FormControl>
-                            <InputLabel>Minimum amount of students</InputLabel>
-                            <Input
-                                type='text'
-                                onChange={(e) => setMin(e.target.value)}
-                            />
-                            <Button onClick={function () { props.editMin(min); setMinOpen(false) }}>Save</Button>
-                            <Button onClick={function () { setMinOpen(false) }}>Cancel</Button>
-                        </FormControl>
-                    </Paper>
-                </DialogContent>
-            </Dialog>
+            {/* 
+            
+            
+            START OF THE COMPONENT EDIT TIMES 
+            
+            
+            
+            
+            */}
+
+
+
+
 
             <Dialog open={timesOpen}>
                 <DialogTitle>Times</DialogTitle>
                 <DialogContent>
                     <Paper>
+                        {timesArray.map(time => (
+                            time === '' ? null :
+                                <ButtonGroup key={time}>
+                                    <Button>{time}</Button>
+                                    <Button><CloseIcon onClick={e => deleteTimes(time)} /></Button>
+                                </ButtonGroup>
+                        ))}
+                        <br />
                         <FormControl>
-                            <InputLabel>Times</InputLabel>
-                            <Input
+                            <Select
                                 type='text'
-                                onChange={(e) => setTimes(e.target.value)}
-                            />
-                            <Button onClick={function () { props.editTimes(times); setTimesOpen(false); }}>Save</Button>
-                            <Button onClick={function () { setTimesOpen(false) }}>Cancel</Button>
+                                defaultValue=''
+                                onChange={e => setStartHour(e.target.value)}
+                            >
+                                {hoursList.map(hour => (
+                                    <MenuItem key={hour} value={hour}>{hour}</MenuItem>
+                                ))}
+                            </Select>
                         </FormControl>
+                        <FormControl>
+                            <Select
+                                type='text'
+                                defaultValue=''
+                                onChange={e => setStartMinute(e.target.value)}
+                            >
+                                {minutesList.map(minute => (
+                                    <MenuItem key={minute} value={minute}>{minute}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <br></br>
+                        <FormControl>
+                            <Select
+                                type='text'
+                                defaultValue=''
+                                onChange={e => setEndHour(e.target.value)}
+                            >
+                                {hoursList.map(hour => (
+                                    <MenuItem key={hour} value={hour}>{hour}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <Select
+                                type='text'
+                                defaultValue=''
+                                onChange={e => setEndMinute(e.target.value)}
+                            >
+                                {minutesList.map(minute => (
+                                    <MenuItem key={minute} value={minute}>{minute}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        {error ? <Typography color='error' variant='body1'>{error}</Typography> : null}
+                        <br></br>
+                        <Button onClick={() => addTime()}>Add time</Button>
+                        <Button onClick={() => saveTimes()}>Save</Button>
                     </Paper>
                 </DialogContent>
             </Dialog>

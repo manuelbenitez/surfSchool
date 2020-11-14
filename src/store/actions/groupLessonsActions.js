@@ -1,5 +1,5 @@
 export const createGroupLessons = () => {
-    return(dispatch, getState, {getFirestore}) => {
+    return (dispatch, getState, { getFirestore }) => {
         const firestore = getFirestore()
         const uid = getState().firebase.auth.uid
 
@@ -11,13 +11,13 @@ export const createGroupLessons = () => {
             min: '',
             max: '',
             times: '',
-        }).then(() => dispatch({type: 'CREATE_GROUPLESSONS'}))
-        .catch(err => dispatch({type: 'CREATE_GROUPLESSONS_ERROR', err}))
+        }).then(() => dispatch({ type: 'CREATE_GROUPLESSONS' }))
+            .catch(err => dispatch({ type: 'CREATE_GROUPLESSONS_ERROR', err }))
     }
 }
 
 export const editPrice = (price) => {
-    return(dispatch, getState, { getFirestore }) => {
+    return (dispatch, getState, { getFirestore }) => {
         const firestore = getFirestore()
         const uid = getState().firebase.auth.uid
 
@@ -29,7 +29,7 @@ export const editPrice = (price) => {
 }
 
 export const editLevel = (level) => {
-    return(dispatch, getState, { getFirestore }) => {
+    return (dispatch, getState, { getFirestore }) => {
         const firestore = getFirestore()
         const uid = getState().firebase.auth.uid
 
@@ -41,7 +41,7 @@ export const editLevel = (level) => {
 }
 
 export const editDescription = (description) => {
-    return(dispatch, getState, { getFirebase }) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore()
         const uid = getState().firebase.auth.uid
 
@@ -53,7 +53,7 @@ export const editDescription = (description) => {
 }
 
 export const editPlaces = (places) => {
-    return(dispatch, getState, { getFirebase }) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore()
         const uid = getState().firebase.auth.uid
 
@@ -65,7 +65,7 @@ export const editPlaces = (places) => {
 }
 
 export const editMax = (max) => {
-    return(dispatch, getState, { getFirebase }) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore()
         const uid = getState().firebase.auth.uid
 
@@ -77,7 +77,7 @@ export const editMax = (max) => {
 }
 
 export const editMin = (min) => {
-    return(dispatch, getState, { getFirebase }) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore()
         const uid = getState().firebase.auth.uid
 
@@ -89,7 +89,7 @@ export const editMin = (min) => {
 }
 
 export const editTimes = (times) => {
-    return(dispatch, getState, { getFirebase }) => {
+    return (dispatch, getState, { getFirebase }) => {
         const firestore = getFirebase().firestore()
         const uid = getState().firebase.auth.uid
 

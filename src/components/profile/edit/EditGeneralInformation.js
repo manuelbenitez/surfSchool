@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { editFullName, editLanguages, editDescription, editCualifications, editDateOfBirth } from '../../../store/actions/profileActions'
 
@@ -26,6 +26,15 @@ const EditGeneralInformation = (props) => {
     const [dateOfBirth, setDateOfBirth] = useState('')
     const [description, setDescription] = useState('')
 
+    useEffect(() => {
+        if(props.user !== undefined){
+            setFullName(props.user.fullName)
+            setLanguages(props.user.languages)
+            setCualifications(props.user.cualifications)
+            setDateOfBirth(props.user.dateOfBirth)
+            setDescription(props.user.description)
+        }
+    }, [props.user])
 
     function handleOpenClick(component) {
         if (component === 'languages') {
@@ -48,8 +57,6 @@ const EditGeneralInformation = (props) => {
                     <EditIcon />
                 </IconButton>
             </Tooltip>
-
-
             <Dialog open={openFullName}>
                 <DialogContent>
                     <Paper>
