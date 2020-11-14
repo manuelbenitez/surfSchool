@@ -46,7 +46,7 @@ function groupLessons(props, theme) {
                     <TableRow>
                         <TableCell>Times</TableCell>
                         <TableCell>{props.group.times}</TableCell>
-                        <TableCell><EditGroupLessons component='times' times={props.private.times} /></TableCell>
+                        <TableCell><EditGroupLessons component='times' times={props.group.times} /></TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>Dates</TableCell>
