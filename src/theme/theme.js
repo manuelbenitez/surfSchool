@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
     imgLogo: {
         maxHeight: '8vh',
         marginRight: '10px',
+        marginTop: '5px'
     },
     menuTypo: {
         flexGrow: '1',

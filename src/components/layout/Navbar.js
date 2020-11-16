@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import SignedInLinks from './SignedInLink'
 import SignedOutLinks from './SignedOutLinks'
-import logo from '../../hat-logo.jpg'
+import hatLogo from '../../hat-logo.jpg'
+import logo from '../../logo.png'
+import logoNavbar from '../../logoNavbar.png'
 
 //theme
 import styles from '../../theme/theme'
@@ -19,7 +21,7 @@ const Navbar = (props) => {
     return (
         <AppBar className={theme.appBar}>
             <Toolbar>
-                <Link to='/'><img src={logo} alt='logo' className={theme.imgLogo}></img></Link>
+                <Link to='/'><img src={logoNavbar} alt='logo' className={theme.imgLogo}></img></Link>
                 <Typography className={theme.menuTypo}>Surf School</Typography>
                 {links}
             </Toolbar>
