@@ -7,6 +7,9 @@ They can set their own price for the lessons, the level they want to teach, the 
 
 On the students side they are going to be able to search for instructors in the location that they specify and apply the different filters to find the right instructor. They will be able to contact an instructor before and after booking a lesson as well.
 
-![Screenshot](SurfSchool.png)
 
-![Screenshot](SurfSchoolProfile.png)
+
+<p align="center">
+  <img src="src/SurfSchool.png" width="350" title="Surf School Welcome Page">
+  <img src="src/SurfSchoolProfile.png" width="350" alt="Profile Welcome Page">
+</p>
