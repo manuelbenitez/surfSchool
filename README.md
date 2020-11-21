@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 Surf School is project I created using React, Redux and Firebase.
 
 The project is not finished yet.
