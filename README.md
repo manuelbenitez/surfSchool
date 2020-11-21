@@ -10,6 +10,7 @@ On the students side they are going to be able to search for instructors in the 
 
 
 <p align="center">
-  <img src="src/SurfSchool.png" width="350" title="Surf School Welcome Page">
-  <img src="src/SurfSchoolProfile.png" width="350" alt="Profile Welcome Page">
+  <img src="src/SurfSchool.png" width="700" title="Surf School Welcome Page">
+  <br/>
+  <img src="src/SurfSchoolProfile.png" width="700" alt="Profile Welcome Page">
 </p>
