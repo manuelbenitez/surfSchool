@@ -23,6 +23,7 @@
     "redux": "^4.0.5",
     "redux-firestore": "^0.14.0",
     "redux-thunk": "^2.3.0",
+    "typeface-arvo": "^1.1.13",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

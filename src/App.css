@@ -3,12 +3,20 @@
   margin-right: 10px;
 }
 
-.main {
+.main-grid {
   min-height: 100vh;
-  background: #A3E7FC;
+  /* background: #A3E7FC; */
+  background-image: url('./background2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .comp {
   margin-top: 8vh;
   margin-left: 300px;
+}
+
+.test {
+  background:s;
 }

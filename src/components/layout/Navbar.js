@@ -1,12 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { AppBar, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Fade, Toolbar } from '@material-ui/core'
 import SignedInLinks from './SignedInLink'
 import SignedOutLinks from './SignedOutLinks'
-import hatLogo from '../../hat-logo.jpg'
-import logo from '../../logo.png'
-import logoNavbar from '../../logoNavbar.png'
+import SenseiSurfSchool from '../../SenseiSurfSchool.png'
 
 //theme
 import styles from '../../theme/theme'
@@ -17,13 +15,18 @@ const Navbar = (props) => {
 
     const { auth, profile } = props
 
-    const links = auth.uid ? <SignedInLinks userName={profile.fullName}/> : <SignedOutLinks />
+    const links = auth.uid ? <SignedInLinks userName={profile.fullName} /> : <SignedOutLinks />
+
+
     return (
-        <AppBar className={theme.appBar}>
+        <AppBar className={theme.appBar} elevation={0}>
             <Toolbar>
-                <Link to='/'><img src={logoNavbar} alt='logo' className={theme.imgLogo}></img></Link>
-                <Typography className={theme.menuTypo}>Surf School</Typography>
+                
+                <Fade in={true} timeout={3000}><Link to='/' style={{marginLeft: '75vh'}} ><img src={SenseiSurfSchool} alt='Sensei Surf School' className={theme.imgSurfSchool}/></Link></Fade>
+
                 {links}
+
+
             </Toolbar>
         </AppBar>
     )

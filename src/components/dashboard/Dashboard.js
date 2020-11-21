@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, FormControl, Grid, Input, InputLabel, MenuItem, Paper, Select } from '@material-ui/core'
+import { Button, Fade, FormControl, Grid, Grow, Input, InputLabel, MenuItem, Paper, Select } from '@material-ui/core'
+import text from '../../Text.png'
 
 //theme
 import styles from '../../theme/theme'
@@ -15,14 +16,17 @@ const names = [
 const Dashboard = () => {
 
 
-        const theme = styles()
+    const theme = styles()
 
-        return (
-            <Grid container direction='row' className='main' >
-                <Grid item xs={6}>
-                    <Paper className={theme.dashboardPaper}><iframe title='How it works!' src="https://player.vimeo.com/video/284055148" width="640" height="360" frameBorder="0" allowFullScreen></iframe></Paper>
-                </Grid>
-                <Grid item xs={6}>
+    return (
+        <Grid container direction='row' className='main-grid' >
+            <Grid item xs={6}>
+                <Fade in={true} timeout={5000}>
+                    <img src={text} alt='Book your surflessons, anywhere !' className={theme.imgText} />
+                </Fade>
+            </Grid>
+            <Grid item xs={6}>
+                <Grow in={true} timeout={6000}>
                     <Paper className={theme.dashboardPaper}>
                         <Paper component='form'>
                             <FormControl >
@@ -42,9 +46,10 @@ const Dashboard = () => {
                         </Paper>
                         <Button className={theme.dashboardButton} variant='contained'>Search</Button>
                     </Paper>
-                </Grid>
+                </Grow>
             </Grid>
-        )
-    }
+        </Grid>
+    )
+}
 
 export default Dashboard

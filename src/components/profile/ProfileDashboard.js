@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 //theme
 import styles from '../../theme/theme'
 
-import { Grid, Drawer, List, ListItem, ListItemText, ListItemIcon, Divider } from '@material-ui/core'
+import { Grid, Paper, List, ListItem, ListItemText, ListItemIcon, Divider, Typography } from '@material-ui/core'
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GroupIcon from '@material-ui/icons/Group';
@@ -56,53 +56,51 @@ const ProfileDashboard = (props) => {
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
-        <Grid className='main'>
-            <Drawer className={theme.profileDrawer} variant='permanent'>
-                <List>
-                    <ListItem></ListItem>
-                    <ListItem></ListItem>
-                    <ListItem></ListItem>
-                    <ListItem></ListItem>
-                    <ListItem></ListItem>
-                    <ListItem>
-                        <ListItemIcon><RecentActorsIcon /></ListItemIcon>
-                        <ListItemText>Profile Overview</ListItemText>
-                    </ListItem>
-                    {categories.map(({ id, children }) => (
-                        <React.Fragment key={id}>
-                            <ListItem >
-                                <ListItemText
-
-                                >
-                                    {id}
-                                </ListItemText>
-                            </ListItem>
-                            {children.map(({ id: childId, icon }) => (
-                                <ListItem
-                                    key={childId}
-                                    button
-                                    onClick={e => setComponentToRender(childId)}
-                                >
-                                    <ListItemIcon >{icon}</ListItemIcon>
+        <Grid container direciton='row' style={{ background: '#fff8e8'}}>
+            <Grid item xs={2}>
+                <Paper className={theme.profileDrawer} elevation={6}>
+                    <List>
+                        <ListItem>
+                            <ListItemIcon><RecentActorsIcon /></ListItemIcon>
+                            <ListItemText><Typography className={theme.generalInfoCell}>Profile Overview</Typography></ListItemText>
+                        </ListItem>
+                        {categories.map(({ id, children }) => (
+                            <React.Fragment key={id}>
+                                <ListItem >
                                     <ListItemText
+
                                     >
-                                        {childId}
+                                        <Typography className={theme.generalInfoCell}>{id}</Typography>
                                     </ListItemText>
                                 </ListItem>
-                            ))}
-                            <Divider />
-                        </React.Fragment>
-                    ))}
+                                {children.map(({ id: childId, icon }) => (
+                                    <ListItem
+                                        key={childId}
+                                        button
+                                        onClick={e => setComponentToRender(childId)}
+                                    >
+                                        <ListItemIcon >{icon}</ListItemIcon>
+                                        <ListItemText
+                                        >
+                                            <Typography className={theme.generalInfoCell}>{childId}</Typography>
+                                        </ListItemText>
+                                    </ListItem>
+                                ))}
+                                <Divider />
+                            </React.Fragment>
+                        ))}
 
-                </List>
-            </Drawer>
-            <div className={theme.profileComponents}>
-                {
-                    componentToRender === 'Basic Information' ? <GeneralInformation user={profile} email={auth.email} /> :
-                        componentToRender === 'Lessons Information' ? <LessonsInformation group={groupLessons} private={privateLessons} /> :
-                            <div>Nada</div>
-                }
-            </div>
+                    </List>
+                </Paper>
+            </Grid>
+            <Grid item xs={10}>
+
+                    {
+                        componentToRender === 'Basic Information' ? <GeneralInformation user={profile} email={auth.email} /> :
+                            componentToRender === 'Lessons Information' ? <LessonsInformation group={groupLessons} private={privateLessons} /> :
+                                <div>Nada</div>
+                    }
+            </Grid>
         </Grid>
     )
 }
