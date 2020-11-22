@@ -68,7 +68,7 @@ const privateLessonsReducer = (state = initState, action) => {
             console.log('places')
             return {
                 ...state,
-                private: {places: action.places},
+                private: { places: action.places },
                 editError: null,
             }
         case 'EDIT_PLACES_ERROR_P':
@@ -81,7 +81,7 @@ const privateLessonsReducer = (state = initState, action) => {
             console.log('max')
             return {
                 ...state,
-                private: {max: action.max},
+                private: { max: action.max },
                 editError: null,
             }
         case 'EDIT_MAX_ERROR_P':
@@ -94,7 +94,7 @@ const privateLessonsReducer = (state = initState, action) => {
             console.log('min')
             return {
                 ...state,
-                private: {min: action.min},
+                private: { min: action.min },
                 editError: null,
             }
         case 'EDIT_MIN_ERROR_P':
@@ -107,10 +107,17 @@ const privateLessonsReducer = (state = initState, action) => {
             console.log('times')
             return {
                 ...state,
-                private: {times: action.times},
+                private: { times: action.times },
                 editError: null,
             }
-        case 'EDIT_MAX_TIMES_P':
+        case 'EDIT_DATES_P':
+            console.log('times')
+            return {
+                ...state,
+                private: { times: action.times },
+                editError: null,
+            }
+        case 'EDIT_DATES_ERROR_P':
             console.log('timeserr')
             return {
                 ...state,

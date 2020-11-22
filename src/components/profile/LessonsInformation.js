@@ -52,7 +52,8 @@ function groupLessons(props, theme) {
                             </TableRow>
                             <TableRow>
                                 <TableCell className={theme.generalInfoCell} >Dates</TableCell>
-                                <TableCell className={theme.generalPropsCell} >{ }</TableCell>
+                                <TableCell className={theme.generalPropsCell} >From: {props.group.startDate} To: {props.group.endDate}</TableCell>
+                                <TableCell><EditGroupLessons component='dates' /></TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -106,7 +107,8 @@ function privateLessons(props, theme) {
                             </TableRow>
                             <TableRow>
                                 <TableCell className={theme.generalInfoCell} >Dates</TableCell>
-                                <TableCell className={theme.generalPropsCell} >{ }</TableCell>
+                                <TableCell className={theme.generalPropsCell} >From: {props.private.startDate} To: {props.private.endDate}</TableCell>
+                                <TableCell><EditPrivateLessons component='dates' /></TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

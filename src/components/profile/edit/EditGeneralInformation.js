@@ -27,7 +27,7 @@ const EditGeneralInformation = (props) => {
     const [description, setDescription] = useState('')
 
     useEffect(() => {
-        if(props.user !== undefined){
+        if (props.user !== undefined) {
             setFullName(props.user.fullName)
             setLanguages(props.user.languages)
             setCualifications(props.user.cualifications)
@@ -66,7 +66,7 @@ const EditGeneralInformation = (props) => {
                                 type='text'
                                 label='Full Name'
                                 autoFocus={true}
-                                
+
                             />
                             <br />
                             <Button onClick={function () { props.editFullName(fullName); setOpenFullName(false) }}>Save</Button>
@@ -85,7 +85,7 @@ const EditGeneralInformation = (props) => {
                         }}
                         validate={(values) => {
                             const errors = {};
-                            if (values.languages.length>=0) {
+                            if (values.languages.length >= 0) {
                                 values.languagesArray = values.languages.toString();
                                 setLanguages(values.languagesArray)
                             }
@@ -119,13 +119,13 @@ const EditGeneralInformation = (props) => {
                                     />
                                 </Box>
                                 <Box margin={1}>
-                                    <Button                            
-                                        onClick={function() { props.editLanguages(languages) ; setOpenLanguages(false)}}
+                                    <Button
+                                        onClick={function () { props.editLanguages(languages); setOpenLanguages(false) }}
                                     >
                                         Save
                                     </Button>
                                     <Button
-                                       onClick={() => setOpenLanguages(false)}
+                                        onClick={() => setOpenLanguages(false)}
                                     >
                                         Cancel
                                     </Button>
@@ -146,7 +146,7 @@ const EditGeneralInformation = (props) => {
                                 rowsMin='6'
                                 maxLength='500'
                                 placeholder='Description'
-                                style={{width: 300}}
+                                style={{ width: 300 }}
                             />
                             <br />
                             <Button onClick={function () { props.editDescription(description); setOpenDescription(false) }}>Save</Button>
@@ -186,7 +186,7 @@ const EditGeneralInformation = (props) => {
                 <DialogContent>
                     <Paper>
                         <FormControl>
-                            <Input
+                            <TextField
                                 onChange={e => setDateOfBirth(e.target.value)}
                                 type='date'
                             />

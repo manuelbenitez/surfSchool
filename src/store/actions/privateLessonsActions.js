@@ -11,6 +11,8 @@ export const createPrivateLessons = () => {
             min: '',
             max: '',
             times: '',
+            startDate: '',
+            endDate: ''
         }).then(() => dispatch({ type: 'CREATE_PRIVATELESSONS' }))
             .catch(err => dispatch({ type: 'CREATE_PRIVATELESSONS_ERROR', err }))
     }
@@ -97,5 +99,18 @@ export const editTimes = (times) => {
             times: times
         }).then(() => dispatch({ type: 'EDIT_TIMES_P', times }))
             .catch(err => dispatch({ type: 'EDIT_TIMES_ERROR_P', err }))
+    }
+}
+
+export const editDates = (startDate, endDate) => {
+    return (dispatch, getState, { getFirebase }) => {
+        const firestore = getFirebase().firestore()
+        const uid = getState().firebase.auth.uid
+
+        return firestore.collection('users_instructors').doc(uid).collection('private_lessons').doc('information').update({
+            startDate: startDate,
+            endDate: endDate
+        }).then(() => dispatch({ type: 'EDIT_DATES_P', startDate, endDate }))
+            .catch(err => dispatch({ type: 'EDIT_DATES_ERROR_P', err }))
     }
 }

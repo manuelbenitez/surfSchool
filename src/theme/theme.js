@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
     },
     imgSurfSchool: {
         maxHeight: '8vh',
-        marginRight: '50vh',
         marginTop: '5px'
     },
     imgText:{
@@ -112,6 +111,7 @@ const useStyles = makeStyles(theme => ({
         background: 'rgba(255, 255, 255, 0.226)',
         minHeight: '100vh',
         width: '30vh',
+        position: 'fixed',
             
     },
     profileComponents: {
@@ -123,6 +123,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop: '1vh',
         maxWidth: '100%',
         fontFamily: 'typeface-arvo',
+        minHeight: '86vh',
         backgroundColor: 'rgba(255, 255, 255, 0.226)',
     },
     generalInfoGrid: {
@@ -137,7 +138,9 @@ const useStyles = makeStyles(theme => ({
     generalPropsCell: {
         fontFamily: 'typeface-arvo',
         letterSpacing: '1px',
-        fontSize: '15px'
+        fontSize: '15px',
+        minWidth: '1000px',
+        maxWidth: '1000px',
     }
 
 

@@ -15,13 +15,13 @@ const groupLessonsReducer = (state = initState, action) => {
     switch (action.type) {
         case 'CREATE_GROUPLESSONS':
             console.log('ANDA A DORMIR')
-            return{
+            return {
                 ...state,
                 editError: null,
             }
         case 'CREATE_GROUPLESSONS_ERROR':
             console.log('ARREGLALO')
-            return{
+            return {
                 ...state,
                 editError: null,
             }
@@ -29,7 +29,7 @@ const groupLessonsReducer = (state = initState, action) => {
             console.log('price')
             return {
                 ...state,
-                group: {price: action.price},
+                group: { price: action.price },
                 editError: null,
             }
         case 'EDIT_PRICE_ERROR_G':
@@ -110,8 +110,15 @@ const groupLessonsReducer = (state = initState, action) => {
                 times: action.times,
                 editError: null,
             }
-        case 'EDIT_MAX_TIMES_G':
-            console.log('timeserr')
+        case 'EDIT_DATES_G':
+            console.log('dates')
+            return {
+                ...state,
+                times: action.times,
+                editError: null,
+            }
+        case 'EDIT_DATES_ERROR_G':
+            console.log('dateserr')
             return {
                 ...state,
                 editError: action.err.message

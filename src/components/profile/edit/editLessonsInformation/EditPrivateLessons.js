@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
-import { editPrice, editLevel, editDescription, editPlaces, editMax, editMin, editTimes } from '../../../../store/actions/privateLessonsActions'
-import { Button, Dialog, DialogContent, DialogTitle, IconButton, InputLabel, Paper, Tooltip, FormControl, Input, Select, TextareaAutosize, MenuItem, Typography, ButtonGroup } from '@material-ui/core'
+import { editPrice, editLevel, editDescription, editPlaces, editMax, editMin, editTimes, editDates } from '../../../../store/actions/privateLessonsActions'
+import { Button, Dialog, DialogContent, DialogTitle, IconButton, InputLabel, Paper, Tooltip, FormControl, Input, Select, TextareaAutosize, MenuItem, Typography, ButtonGroup, TextField } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -17,6 +17,7 @@ export const EditPrivateLessons = (props) => {
     const [placesOpen, setPlacesOpen] = useState(false)
     const [studentsOpen, setStudentsOpen] = useState(false)
     const [timesOpen, setTimesOpen] = useState(false)
+    const [datesOpen, setDatesOpen] = useState(false)
 
 
     const [price, setPrice] = useState('')
@@ -25,6 +26,8 @@ export const EditPrivateLessons = (props) => {
     const [places, setPlaces] = useState('')
     const [max, setMax] = useState('')
     const [min, setMin] = useState('')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
     const [error, setError] = useState('')
 
     //TIMES DIALOG CONSTANTS
@@ -49,6 +52,8 @@ export const EditPrivateLessons = (props) => {
             setStudentsOpen(true)
         } else if (component === 'times') {
             setTimesOpen(true)
+        }else if (component === 'dates'){
+            setDatesOpen(true)
         }
     }
 
@@ -133,6 +138,19 @@ export const EditPrivateLessons = (props) => {
     }
 
 
+    function saveDates() {
+        
+        if(startDate === '' || endDate === ''){
+            setError('You must select a start and end date')
+        }else if(Date.parse(startDate) >= Date.parse(endDate)){
+            setError('Start date has to be earlier than end Date')
+        }else{
+            props.editDates(startDate, endDate)
+            setError('')
+            setDatesOpen(false)
+        }
+    }
+
     return (
         <Fragment>
             <Tooltip title="Edit Details">
@@ -148,7 +166,7 @@ export const EditPrivateLessons = (props) => {
                         <FormControl>
                             <InputLabel>Price</InputLabel>
                             <Input
-                                type='text'
+                                type='number'
                                 onChange={(e) => setPrice(e.target.value)} />
                             <Button onClick={function () { props.editPrice(price); setPriceOpen(false) }}>Save</Button>
                             <Button onClick={function () { setPriceOpen(false) }}>Cancel</Button>
@@ -344,7 +362,35 @@ export const EditPrivateLessons = (props) => {
                     </Paper>
                 </DialogContent>
             </Dialog>
+
+            <Dialog open={datesOpen}>
+                <DialogTitle>Start and End Date</DialogTitle>
+                <DialogContent>
+                    <Paper>
+                        <Typography>Start Date</Typography>
+                        <TextField
+                            type='date'
+                            defaultValue='2020-11-20'
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                        <br />
+                        <Typography>End Date</Typography>
+                        <TextField
+                            type='date'
+                            defaultValue='2020-11-20'
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
+                        <br />
+                        {error ? <Typography color='error'>{error}</Typography> : null}
+                        <Button onClick={() => saveDates()}>Save</Button>
+                        <Button onClick={() => { setDatesOpen(false); setError('') }}>Close</Button>
+                    </Paper>
+                </DialogContent>
+            </Dialog>
         </Fragment>
+
+
+
     )
 }
 
@@ -358,6 +404,7 @@ const mapDispatchToProps = (dispatch) => {
         editMax: (max) => dispatch(editMax(max)),
         editMin: (min) => dispatch(editMin(min)),
         editTimes: (times) => dispatch(editTimes(times)),
+        editDates: (startDate, endDate) => dispatch(editDates(startDate, endDate))
     }
 }
 

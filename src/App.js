@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import './App.css'
 import SignIn from './components/auth/SignIn'
@@ -9,14 +9,14 @@ import ProfileDashboard from './components/profile/ProfileDashboard'
 //COMPONENTS
 import Navbar from './components/layout/Navbar'
 
-//MATERIAL UI IMPORTS
 
-class App extends Component {
 
-  render() {
+const App = () => {
+
+
     return (
       <BrowserRouter>
-        <Navbar/>
+          <Navbar/>
         <Switch>
           <Route exact path='/' component={Dashboard}></Route>
           <Route path='/signin' component={SignIn}></Route>
@@ -25,7 +25,7 @@ class App extends Component {
         </Switch>
       </BrowserRouter>
     );
-  }
 }
+
 
 export default App;
