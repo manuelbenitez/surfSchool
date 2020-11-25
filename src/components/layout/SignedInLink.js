@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Collapse, Grow, Zoom } from '@material-ui/core'
 import { signOut } from '../../store/actions/authActions'
 
 //theme
@@ -16,10 +16,12 @@ const SignedInLinks = (props) => {
 
 
     return (
-        <div>
-            <Button className={theme.signedInButton} variant='contained' onClick={() => props.signOut()} href='/'>Log Out</Button>
-            <Button className={theme.signedInButton} variant='contained' href={url} >{props.userName}</Button>
-        </div>
+        <Zoom in={true} style={{ transitionDelay: '500ms' }}>
+            <div>
+                <Button className={theme.signedInButton} variant='contained' onClick={() => props.signOut()} href='/'>Log Out</Button>
+                <Zoom in={true} style={{ transitionDelay: '700ms' }}><Button className={theme.signedInButton} variant='contained' href={url} >{props.userName}</Button></Zoom>
+            </div>
+        </Zoom>
 
     )
 }

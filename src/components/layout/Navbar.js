@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { AppBar, Fade, Toolbar, useScrollTrigger, Slide } from '@material-ui/core'
+import { AppBar, Fade, Toolbar, useScrollTrigger, Slide, Typography } from '@material-ui/core'
 import SignedInLinks from './SignedInLink'
 import SignedOutLinks from './SignedOutLinks'
-import SenseiSurfSchool from '../../SenseiSurfSchool.png'
 
 //theme
 import styles from '../../theme/theme'
@@ -23,7 +22,7 @@ const Navbar = (props) => {
         <Slide in={!trigger}>
             <AppBar className={theme.appBar} elevation={0}>
                 <Toolbar>
-                    <Fade in={true} timeout={3000}><Link to='/' style={{ marginLeft: '75vh', marginRight: '50vh' }} ><img src={SenseiSurfSchool} alt='Sensei Surf School' className={theme.imgSurfSchool} /></Link></Fade>
+                    <Fade in={true} timeout={3000}><Link to='/' style={{ textDecoration: 'none', marginRight: '10vw' }} ><Typography className={theme.senseiTypo}>Sensei Surf School</Typography></Link></Fade>
                     {links}
                 </Toolbar>
             </AppBar>

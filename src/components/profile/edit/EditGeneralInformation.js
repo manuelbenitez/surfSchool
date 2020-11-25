@@ -3,16 +3,19 @@ import { connect } from 'react-redux'
 import { editFullName, editLanguages, editDescription, editCualifications, editDateOfBirth } from '../../../store/actions/profileActions'
 
 
-import { Dialog, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, Paper, Tooltip, Select, Input, MenuItem, Button, Box, TextField, TextareaAutosize } from '@material-ui/core'
+import { Dialog, DialogContent, FormControl, IconButton, InputLabel, Paper, Tooltip, Select, Input, MenuItem, Button, TextField, InputBase } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import { Autocomplete } from 'formik-material-ui-lab'
 import { languagesList, cualificationsList } from '../../../data/data'
 import { Field, Form, Formik } from 'formik'
+import styles from '../../../theme/theme'
 
 
 
 
 const EditGeneralInformation = (props) => {
+
+    const theme = styles()
 
     const [openFullName, setOpenFullName] = useState(false)
     const [openLanguages, setOpenLanguages] = useState(false)
@@ -58,26 +61,25 @@ const EditGeneralInformation = (props) => {
                 </IconButton>
             </Tooltip>
             <Dialog open={openFullName}>
-                <DialogContent>
-                    <Paper>
+                <DialogContent className={theme.editDialog}>
+                    <Paper className={theme.editPaper}>
                         <FormControl>
-                            <TextField
+                            <InputLabel>Full Name</InputLabel>
+                            <InputBase
                                 onChange={(e) => setFullName(e.target.value)}
                                 type='text'
-                                label='Full Name'
-                                autoFocus={true}
-
+                                className={theme.editInput}
                             />
                             <br />
-                            <Button onClick={function () { props.editFullName(fullName); setOpenFullName(false) }}>Save</Button>
-                            <Button onClick={() => setOpenFullName(false)}>Cancel</Button>
+                            <Button onClick={function () { props.editFullName(fullName); setOpenFullName(false) }} className={theme.editButton}>Save</Button>
+                            <Button onClick={() => setOpenFullName(false)} className={theme.editButton} >Cancel</Button>
                         </FormControl>
                     </Paper>
                 </DialogContent>
             </Dialog>
 
             <Dialog open={openLanguages}>
-                <DialogContent>
+                <DialogContent className={theme.editDialog}>
                     <Formik
                         initialValues={{
                             languages: [],
@@ -91,108 +93,105 @@ const EditGeneralInformation = (props) => {
                             }
                             return errors;
                         }}
-                        onSubmit={(values, { setSubmitting }) => {
-                            setTimeout(() => {
-                                setSubmitting(false);
-                                alert(JSON.stringify(values, null, 2));
-                            }, 500);
-                        }}
                     >
-                        {({ submitForm, isSubmitting, touched, errors }) => (
-                            <Form>
-                                <Box margin={1}>
+                        {({ touched, errors }) => (
+                            <Paper className={theme.editPaper}>
+                                <Form>
+                                    <InputLabel>Languages</InputLabel>
                                     <Field
                                         name="languages"
                                         multiple
                                         component={Autocomplete}
                                         options={languagesList}
-                                        style={{ width: 300 }}
+                                        className={theme.editInput}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
                                                 error={touched['languages'] && !!errors['languages']}
                                                 helperText={touched['languages'] && errors['languages']}
-                                                label="Languages"
+
                                                 variant="outlined"
                                             />
                                         )}
                                     />
-                                </Box>
-                                <Box margin={1}>
+                                    <br />
                                     <Button
                                         onClick={function () { props.editLanguages(languages); setOpenLanguages(false) }}
+                                        className={theme.editButton}
                                     >
                                         Save
-                                    </Button>
+                                        </Button>
                                     <Button
                                         onClick={() => setOpenLanguages(false)}
+                                        className={theme.editButton}
                                     >
                                         Cancel
                                     </Button>
-                                </Box>
-                            </Form>
+                                </Form>
+                            </Paper>
                         )}
                     </Formik>
                 </DialogContent>
             </Dialog>
 
             <Dialog open={openDescription}>
-                <DialogContent>
-                    <Paper>
+                <DialogContent className={theme.editDialog}>
+                    <Paper className={theme.editPaper}>
                         <FormControl>
-                            <TextareaAutosize
+                            <TextField
                                 onChange={e => setDescription(e.target.value)}
                                 type='text'
-                                rowsMin='6'
                                 maxLength='500'
-                                placeholder='Description'
-                                style={{ width: 300 }}
+                                multiline={true}
+                                className={theme.editInput}
                             />
                             <br />
-                            <Button onClick={function () { props.editDescription(description); setOpenDescription(false) }}>Save</Button>
-                            <Button onClick={() => setOpenDescription(false)}>Cancel</Button>
+                            <Button onClick={function () { props.editDescription(description); setOpenDescription(false) }} className={theme.editButton} >Save</Button>
+                            <Button onClick={() => setOpenDescription(false)} className={theme.editButton} >Cancel</Button>
                         </FormControl>
                     </Paper>
                 </DialogContent>
             </Dialog>
 
             <Dialog open={openCualifications}>
-                <DialogTitle>Cualifications</DialogTitle>
-                <DialogContent>
-                    <Paper>
+                <DialogContent className={theme.editDialog}>
+                    <Paper className={theme.editPaper}>
                         <FormControl>
                             <InputLabel>Cualifications</InputLabel>
                             <Select
                                 input={<Input />}
                                 onChange={e => setCualifications(e.target.value)}
                                 defaultValue=''
+                                className={theme.editInput}
                             >
                                 {cualificationsList.map((cualification) => (
-                                    <MenuItem key={cualification} value={cualification}>
+                                    <MenuItem key={cualification} value={cualification} className={theme.editInput}>
                                         {cualification}
                                     </MenuItem>
                                 ))}
                             </Select>
                             <br />
-                            <Button onClick={function () { props.editCualifications(cualifications); setOpenCualifications(false) }}>Save</Button>
-                            <Button onClick={() => setOpenCualifications(false)}>Cancel</Button>
+                            <Button onClick={function () { props.editCualifications(cualifications); setOpenCualifications(false) }} className={theme.editButton} >Save</Button>
+                            <Button onClick={() => setOpenCualifications(false)} className={theme.editButton} >Cancel</Button>
                         </FormControl>
                     </Paper>
                 </DialogContent>
             </Dialog>
 
             <Dialog open={openDateOfBirth}>
-                <DialogTitle>Date of birth</DialogTitle>
-                <DialogContent>
-                    <Paper>
+                <DialogContent className={theme.editDialog}>
+                    <Paper className={theme.editPaper}>
                         <FormControl>
+                        <InputLabel>Date of Birth</InputLabel>
                             <TextField
                                 onChange={e => setDateOfBirth(e.target.value)}
                                 type='date'
+                                className={theme.editInput}
+                                variant='outlined'
                             />
                             <br />
-                            <Button onClick={function () { props.editDateOfBirth(dateOfBirth); setOpenDateOfBirth(false) }}>Save</Button>
-                            <Button onClick={() => setOpenDateOfBirth(false)}>Cancel</Button>
+                            <Button onClick={function () { props.editDateOfBirth(dateOfBirth); setOpenDateOfBirth(false) }} className={theme.editButton} >Save</Button>
+                            <Button onClick={() => setOpenDateOfBirth(false)} className={theme.editButton} >Cancel</Button>
                         </FormControl>
                     </Paper>
                 </DialogContent>
