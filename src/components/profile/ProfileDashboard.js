@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import GeneralInformation from './GeneralInformation'
 import LessonsInformation from './LessonsInformation'
+import BankDetails from './BankDetails'
+import PersonalizedLessons from './personalizedLessons/PersonalizedLessons'
 import { connect } from 'react-redux'
 
 //theme
 import styles from '../../theme/theme'
 
-import { Grid, Paper, List, ListItem, ListItemText, ListItemIcon, Divider, Typography } from '@material-ui/core'
+import { Grid, Paper, List, ListItem, ListItemText, ListItemIcon, Divider, Typography, Slide } from '@material-ui/core'
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GroupIcon from '@material-ui/icons/Group';
@@ -29,7 +31,7 @@ const categories = [
         id: 'Lessons Information',
         children: [
             { id: 'Lessons Information', icon: <GroupIcon /> },
-            { id: 'Combo Lessons', icon: <ControlPointIcon /> }
+            { id: 'Personalized Lessons', icon: <ControlPointIcon /> }
         ]
     },
     {
@@ -56,50 +58,54 @@ const ProfileDashboard = (props) => {
     if (!auth.uid) return <Redirect to='/signin' />
 
     return (
-        <Grid container direciton='row' style={{ background: '#fff8e8'}}>
-            <Grid item xs={2}>
-                <Paper className={theme.profileDrawer} elevation={6}>
-                    <List>
-                        <ListItem>
-                            <ListItemIcon><RecentActorsIcon /></ListItemIcon>
-                            <ListItemText><Typography className={theme.generalInfoCell}>Profile Overview</Typography></ListItemText>
-                        </ListItem>
-                        {categories.map(({ id, children }) => (
-                            <React.Fragment key={id}>
-                                <ListItem >
-                                    <ListItemText
-
-                                    >
-                                        <Typography className={theme.generalInfoCell}>{id}</Typography>
-                                    </ListItemText>
-                                </ListItem>
-                                {children.map(({ id: childId, icon }) => (
-                                    <ListItem
-                                        key={childId}
-                                        button
-                                        onClick={e => setComponentToRender(childId)}
-                                    >
-                                        <ListItemIcon >{icon}</ListItemIcon>
+        <Grid container direciton='row' style={{ background: '#fff8e8' }}>
+            <Slide in={true} direction='right' timeout={1000}>
+                <Grid item xs={2}>
+                    <Paper className={theme.profileDrawer} elevation={6}>
+                        <List>
+                            <ListItem>
+                                <ListItemIcon><RecentActorsIcon /></ListItemIcon>
+                                <ListItemText><Typography className={theme.generalInfoCell}>Profile Overview</Typography></ListItemText>
+                            </ListItem>
+                            {categories.map(({ id, children }) => (
+                                <React.Fragment key={id}>
+                                    <ListItem >
                                         <ListItemText
+
                                         >
-                                            <Typography className={theme.generalInfoCell}>{childId}</Typography>
+                                            <Typography className={theme.generalInfoCell}>{id}</Typography>
                                         </ListItemText>
                                     </ListItem>
-                                ))}
-                                <Divider />
-                            </React.Fragment>
-                        ))}
+                                    {children.map(({ id: childId, icon }) => (
+                                        <ListItem
+                                            key={childId}
+                                            button
+                                            onClick={e => setComponentToRender(childId)}
+                                        >
+                                            <ListItemIcon >{icon}</ListItemIcon>
+                                            <ListItemText
+                                            >
+                                                <Typography className={theme.generalInfoCell}>{childId}</Typography>
+                                            </ListItemText>
+                                        </ListItem>
+                                    ))}
+                                    <Divider />
+                                </React.Fragment>
+                            ))}
 
-                    </List>
-                </Paper>
-            </Grid>
+                        </List>
+                    </Paper>
+                </Grid>
+            </Slide>
             <Grid item xs={10}>
 
-                    {
-                        componentToRender === 'Basic Information' ? <GeneralInformation user={profile} email={auth.email} /> :
-                            componentToRender === 'Lessons Information' ? <LessonsInformation group={groupLessons} private={privateLessons} /> :
-                                <div>Nada</div>
-                    }
+                {
+                    componentToRender === 'Basic Information' ? <GeneralInformation user={profile} email={auth.email} /> :
+                        componentToRender === 'Lessons Information' ? <LessonsInformation group={groupLessons} private={privateLessons} /> :
+                            componentToRender === 'Bank Account Details' ? <BankDetails /> :
+                                componentToRender === 'Personalized Lessons' ? <PersonalizedLessons /> :
+                                    <div>Nada</div>
+                }
             </Grid>
         </Grid>
     )

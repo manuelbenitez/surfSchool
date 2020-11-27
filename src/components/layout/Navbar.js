@@ -22,7 +22,7 @@ const Navbar = (props) => {
         <Slide in={!trigger}>
             <AppBar className={theme.appBar} elevation={0}>
                 <Toolbar>
-                    <Fade in={true} timeout={3000}><Link to='/' style={{ textDecoration: 'none', marginRight: '10vw' }} ><Typography className={theme.senseiTypo}>Sensei Surf School</Typography></Link></Fade>
+                    <Fade in={true} timeout={1500}><Link to='/' style={{ textDecoration: 'none', marginRight: '10vw' }} ><Typography className={theme.senseiTypo}>Sensei Surf School</Typography></Link></Fade>
                     {links}
                 </Toolbar>
             </AppBar>

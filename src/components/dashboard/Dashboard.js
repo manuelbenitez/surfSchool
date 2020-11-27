@@ -1,6 +1,5 @@
 import React from 'react'
-import { Button, Fade, FormControl, Grid, Grow, Input, InputLabel, MenuItem, Paper, Select } from '@material-ui/core'
-import text from '../../Text.png'
+import { Button, Fade, FormControl, Grid, Grow, Input, InputLabel, MenuItem, Paper, Select, Typography } from '@material-ui/core'
 
 //theme
 import styles from '../../theme/theme'
@@ -21,12 +20,10 @@ const Dashboard = () => {
     return (
         <Grid container className={theme.mainGrid} >
             <Grid item xs={6}>
-                <Fade in={true} timeout={5000}>
-                    <img src={text} alt='Book your surflessons, anywhere !' className={theme.imgText} />
-                </Fade>
+                <Fade in={true} timeout={1500}><Typography className={theme.textDashboard}>Book your surf lessons, anywhere!</Typography></Fade>
             </Grid>
             <Grid item xs={6}>
-                <Grow in={true} timeout={6000}>
+                <Grow in={true} timeout={3500}>
                     <Paper className={theme.dashboardPaper}>
                         <Paper component='form' className={theme.dashboardFormPaper}>
                             <FormControl >

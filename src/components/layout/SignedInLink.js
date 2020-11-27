@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Collapse, Grow, Zoom } from '@material-ui/core'
+import { Button, Zoom } from '@material-ui/core'
 import { signOut } from '../../store/actions/authActions'
 
 //theme

@@ -23,15 +23,21 @@ const useStyles = makeStyles(theme => ({
             alignItems: 'center',
         }
     },
-    imgText: {
-        maxWidth: '31vw',
-        maxHeight: '42vw',
-        marginTop: '1vw',
-        marginLeft: '9vw',
-        [theme.breakpoints.down(600)]:{
-            maxWidth: '50vh',
-            maxHeight: '50vh',
-            marginLeft: '-6vw',
+    textDashboard: {
+        fontSize: '5vw',
+        fontFamily: 'arvo',
+        color: 'black',
+        fontWeight: '700',
+        letterSpacing: '0.1vw',
+        display: 'flex',
+        flex: '1',
+        marginTop: '12vw',
+        marginLeft: '12vw',
+        [theme.breakpoints.down(600)]: {
+            fontSize: '8vw',
+            flex: '1',
+            display: 'flex'
+
         }
     },
     senseiTypo: {
@@ -48,7 +54,7 @@ const useStyles = makeStyles(theme => ({
             fontSize: '8vw',
             flex: '1',
             display: 'flex'
-            
+
         }
     },
     signedInButton: {
@@ -110,7 +116,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         backgroundColor: 'rgba(255, 255, 255, 0.226)',
         boxShadow: '0px 5px 2px -3px rgba(0,0,0,0.2), 0px 4px 4px 0px rgba(0,0,0,0.14), 0px 3px 6px 0px rgba(0,0,0,0.12)',
-        [theme.breakpoints.down(600)]:{
+        [theme.breakpoints.down(600)]: {
             minWidth: '70vw',
             minHeight: '70vw',
             marginTop: '0px',
@@ -132,7 +138,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         display: 'flex',
         flexDirection: 'column',
-        
+
     },
     dashboardButton: {
         backgroundColor: 'black',
@@ -222,6 +228,19 @@ const useStyles = makeStyles(theme => ({
         },
 
     },
+    bankDetailsGrid: {
+        margin: '5vw',
+        minHeight: '78vh'
+    },
+    bankDetailsPaper: {
+        background: 'rgba(255, 255, 255, 0.226)',
+        display: 'flex',
+        paddingTop: '5vw',
+        alignItems: 'center',
+        flexDirection: 'column',
+        boxShadow: '0px 5px 2px -3px rgba(0,0,0,0.2), 0px 4px 4px 0px rgba(0,0,0,0.14), 0px 3px 6px 0px rgba(0,0,0,0.12)',
+        minHeight: '30vw',
+    }
 
 
 }))
